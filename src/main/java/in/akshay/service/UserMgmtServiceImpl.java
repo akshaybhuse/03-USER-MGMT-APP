@@ -204,7 +204,7 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 				BufferedReader buffReader = new BufferedReader(fileReader);) {
 			String line = buffReader.readLine();
 
-			StringBuffer buffer = new StringBuffer();
+			StringBuilder buffer = new StringBuilder();
 
 			while (line != null) {
 				buffer.append(line);
