@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -21,6 +23,8 @@ import in.akshay.utils.EmailUtils;
 
 @Service
 public class UserMgmtServiceImpl implements UserMgmtService {
+
+	private Logger logger = LoggerFactory.getLogger(UserMgmtServiceImpl.class);
 
 	@Autowired
 	private UserMasterRepo userMasterRepo;
@@ -105,7 +109,7 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 			userMasterRepo.deleteById(userId);
 			return true;
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Exception Occured", e);
 		}
 		return false;
 	}
@@ -212,7 +216,7 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 			mailBody = mailBody.replace("{URL}", url);
 			mailBody = mailBody.replace("{PWD}", pwd);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Exception Occured in readEmailBody", e);
 		}
 		return mailBody;
 	}
