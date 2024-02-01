@@ -28,6 +28,8 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 	@Autowired
 	private EmailUtils emailUtils;
 
+	private Random random = new Random();
+
 	@Override
 	public boolean saveUser(User user) {
 
@@ -170,9 +172,6 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 		// create random string builder
 		StringBuilder sb = new StringBuilder();
 
-		// create an object of Random class
-		Random random = new Random();
-
 		// specify length of random string
 		int length = 6;
 
@@ -197,10 +196,8 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 		String url = "";
 		String mailBody = null;
 
-		try {
-			FileReader fileReader = new FileReader(fileName);
-			BufferedReader buffReader = new BufferedReader(fileReader);
-
+		try (FileReader fileReader = new FileReader(fileName);
+				BufferedReader buffReader = new BufferedReader(fileReader);) {
 			String line = buffReader.readLine();
 
 			StringBuffer buffer = new StringBuffer();
@@ -209,7 +206,6 @@ public class UserMgmtServiceImpl implements UserMgmtService {
 				buffer.append(line);
 				line = buffReader.readLine();
 			}
-			buffReader.close();
 			mailBody = buffer.toString();
 			mailBody = mailBody.replace("{FULLNAME}", fullName);
 			mailBody = mailBody.replace("{TEMP-PWD}", pwd);
